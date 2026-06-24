@@ -1,0 +1,8 @@
+import "tfplan/v2" as tfplan
+
+main = rule {
+  all tfplan.resource_changes as _, rc {
+    rc.type is "azurerm_resource_group" implies
+    startswith(rc.change.after.name, "rg-")
+  }
+}
